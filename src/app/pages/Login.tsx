@@ -1,34 +1,38 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { api } from "../core/http/api";
+import "./Login.css";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const navigate = useNavigate();
 
-  async function handleLogin() {
-    try {
-      const response = await api.post("/autenticacao/login", {
-        email,
-        senha,
-      });
-
-      localStorage.setItem("token", response.data.token);
-      navigate("/pets");
-    } catch {
-      alert("Erro ao autenticar");
-    }
+  function handleLogin() {
+    // por enquanto é mock
+    navigate("/pets");
   }
 
   return (
-    <div style={{ padding: 40 }}>
-      <h2>Login</h2>
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <br /><br />
-      <input placeholder="Senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
-      <br /><br />
-      <button onClick={handleLogin}>Entrar</button>
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Entrar</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+        />
+
+        <button onClick={handleLogin}>Entrar</button>
+      </div>
     </div>
   );
 }
